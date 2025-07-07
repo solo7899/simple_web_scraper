@@ -59,7 +59,7 @@ def parse_html_with_class(html_content, tag, class_, verbose=False):
         print(f"Found {len(news)} news items.")
     for item in news:
         a_tag = item.find("a")
-        title = a_tag.text
+        title = item.text
         link = a_tag['href']
         if verbose:
             print(f"Title: {title}, Link: {link}")
