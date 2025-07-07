@@ -1,4 +1,6 @@
 import argparse
+import csv
+import json
 import requests
 
 from bs4 import BeautifulSoup
@@ -29,7 +31,7 @@ def get_html(url):
         return None
 
 
-def parse_html(html_content):
+def parse_html(html_content, verbose=False):
     """
     Parses the HTML content and extracts relevant information.
 
@@ -42,11 +44,45 @@ def parse_html(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     items = []
 
-    for item in soup.find_all('span', class_='titleline'):
+    news = soup.find_all('span', class_='titleline')
+    if verbose:
+        print(f"Found {len(news)} news items.")
+    for item in news:
         title = item.a.text
         link = item.a['href']
+        if verbose:
+            print(f"Title: {title}, Link: {link}")
         items.append({'title': title, 'link': link})
     return items
+
+
+def output_json(data, verbose=False):
+    """
+    Outputs the data in JSON format.
+
+    Args:
+        data (list): The data to output.
+    """
+    if verbose:
+        print("Outputting data in JSON format.")
+    json.dump(data, open('output.json', 'w'), indent=4)
+
+
+def output_csv(data, verbose=False):
+    """
+    Outputs the data in CSV format.
+
+    Args:
+        data (list): The data to output.
+    """
+    if verbose:
+        print("Outputting data in CSV format.")
+    with open('output.csv', 'w', newline='') as csvfile:
+        fieldnames = ['title', 'link']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for item in data:
+            writer.writerow(item)
 
 
 if __name__ == "__main__":
@@ -61,3 +97,8 @@ if __name__ == "__main__":
         exit(1)
     
     news_links = parse_html(html_content, args.verbose)
+
+    if args.json:
+        output_json(news_links, args.verbose)
+    if args.csv:
+        output_csv(news_links, args.verbose)
