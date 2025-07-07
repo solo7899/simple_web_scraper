@@ -1,13 +1,13 @@
 # Web Scraper
 
-A simple Python web scraper that fetches and parses news headlines from [Hacker News](https://news.ycombinator.com/), outputting the results in JSON and/or CSV format.
+A flexible Python web scraper for extracting data from any website by specifying the URL, HTML tag, and either a class or ID. Outputs results in JSON and/or CSV format with customizable filenames.
 
 ## Features
 
-- Fetches HTML content from a specified URL (default: Hacker News)
-- Parses news titles and links
-- Outputs results in JSON and/or CSV
-- Verbose mode for detailed output
+- Scrape any website by providing the URL
+- Extract data using a specified HTML tag and either a class or ID
+- Output results to custom-named JSON and/or CSV files
+- Verbose mode for detailed logging
 
 ## Requirements
 
@@ -28,29 +28,36 @@ A simple Python web scraper that fetches and parses news headlines from [Hacker 
 
 ## Usage
 
-Run the scraper with optional arguments:
+Run the scraper with the required and optional arguments:
 
 ```sh
-python scraper.py [--json] [--csv] [-v]
+python scraper.py --url <URL> --tag <TAG> [--clas <CLASS>] [--id <ID>] [--json <JSON_FILE>] [--csv <CSV_FILE>] [-v]
 ```
 
 ### Arguments
 
-- `--json` Output results to `output.json`
-- `--csv` Output results to `output.csv`
-- `-v`, `--verbose` Enable verbose output
+- `--url`, `-u` URL to scrape (**required**)
+- `--tag` HTML tag to search for (**required**)
+- `--clas` HTML class to search for (optional)
+- `--id` HTML ID to search for (optional)
+- `--json` Output results to specified JSON file (optional)
+- `--csv` Output results to specified CSV file (optional)
+- `-v`, `--verbose` Enable verbose output (optional)
+
+**Note:** You must specify either `--clas` or `--id` for parsing.
 
 ### Example
 
-Fetch news and output both JSON and CSV with verbose logging:
+Scrape all `<span>` elements with class `titleline` from Hacker News and output to `hn.json` and `hn.csv`:
 
 ```sh
-python scraper.py --json --csv -v
+python scraper.py --url https://news.ycombinator.com/ --tag span --clas titleline --json hn.json --csv hn.csv -v
 ```
 
 ## Output
 
-- `output.json`: List of news items in JSON format
-- `output.csv`: List of news items in CSV format
+- JSON and/or CSV files with extracted data (custom filenames)
+
+---
 
 **Writer:** SOLO7899
