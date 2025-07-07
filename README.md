@@ -18,7 +18,7 @@ A flexible Python web scraper for extracting data from any website by specifying
 
 1. Clone this repository:
    ```sh
-   git clone https://github.com/yourusername/web_scraper.git
+   git clone https://github.com/solo7899/web_scraper.git
    cd web_scraper
    ```
 2. Install dependencies:
