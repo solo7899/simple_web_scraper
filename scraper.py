@@ -12,8 +12,8 @@ def cmd():
     parser.add_argument("--clas", type=str, help="HTML class to search for news items")
     parser.add_argument("--id", type=str, help="HTML ID to search for news items")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output")
-    parser.add_argument("--json", action="store_true", help="Output results in JSON format")
-    parser.add_argument("--csv", action="store_true", help="Output results in CSV format")
+    parser.add_argument("--json", type=str, default=None, help="Output results in JSON format")
+    parser.add_argument("--csv", type=str, default=None, help="Output results in CSV format")
     return parser.parse_args()
 
 def get_html(url, verbose=False):
@@ -90,7 +90,7 @@ def parse_html_with_id(html_content, tag, id_, verbose=False):
     return items
 
 
-def output_json(data, verbose=False):
+def output_json(data, json_name, verbose=False):
     """
     Outputs the data in JSON format.
 
@@ -99,10 +99,10 @@ def output_json(data, verbose=False):
     """
     if verbose:
         print("Outputting data in JSON format.")
-    json.dump(data, open('output.json', 'w'), indent=4)
+    json.dump(data, open(json_name, 'w'), indent=4)
 
 
-def output_csv(data, verbose=False):
+def output_csv(data, csv_name, verbose=False):
     """
     Outputs the data in CSV format.
 
@@ -111,7 +111,7 @@ def output_csv(data, verbose=False):
     """
     if verbose:
         print("Outputting data in CSV format.")
-    with open('output.csv', 'w', newline='') as csvfile:
+    with open(csv_name, 'w', newline='') as csvfile:
         fieldnames = ['title', 'link']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -144,6 +144,6 @@ if __name__ == "__main__":
         exit(1)
 
     if args.json:
-        output_json(news_links, args.verbose)
+        output_json(news_links, args.json, args.verbose)
     if args.csv:
-        output_csv(news_links, args.verbose)
+        output_csv(news_links, args.csv , args.verbose)
