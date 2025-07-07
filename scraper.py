@@ -138,11 +138,12 @@ if __name__ == "__main__":
         print("No URL provided.")
         exit(1)
     html_content = get_html(args.url, args.verbose)
-    if html_content:
-        print(f"Fetched {len(html_content)} characters from {args.url}")
-    else:
+
+    if not html_content:
         print("Failed to fetch the HTML content.")
         exit(1)
+
+    print(f"Fetched {len(html_content)} characters from {args.url}")
     
     if args.tag is None:
         print("No tag specified")
