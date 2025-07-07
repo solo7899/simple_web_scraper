@@ -22,6 +22,7 @@ def get_html(url, verbose=False):
 
     Args:
         url (str): The URL to fetch.
+        verbose (bool): If True, prints verbose output.
 
     Returns:
         str: The HTML content of the page.
@@ -43,6 +44,9 @@ def parse_html_with_class(html_content, tag, class_, verbose=False):
 
     Args:
         html_content (str): The HTML content to parse.
+        tag (str): The HTML tag to search for.
+        class_ (str): The HTML class to search for.
+        verbose (bool): If True, prints verbose output.
 
     Returns:
         list: A list of dictionaries containing extracted data.
@@ -68,6 +72,9 @@ def parse_html_with_id(html_content, tag, id_, verbose=False):
 
     Args:
         html_content (str): The HTML content to parse.
+        tag (str): The HTML tag to search for.
+        id_ (str): The HTML ID to search for.
+        verbose (bool): If True, prints verbose output.
 
     Returns:
         list: A list of dictionaries containing extracted data.
@@ -96,6 +103,8 @@ def output_json(data, json_name, verbose=False):
 
     Args:
         data (list): The data to output.
+        json_name (str): The name of the JSON file to write to.
+        verbose (bool): If True, prints verbose output.
     """
     if verbose:
         print("Outputting data in JSON format.")
@@ -108,6 +117,8 @@ def output_csv(data, csv_name, verbose=False):
 
     Args:
         data (list): The data to output.
+        csv_name (str): The name of the CSV file to write to.
+        verbose (bool): If True, prints verbose output.
     """
     if verbose:
         print("Outputting data in CSV format.")
